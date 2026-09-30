@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marmara Üniversitesi Göztepe Yerleşkesi - Kongre</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root[data-theme="light"] {
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-blue: #2563eb;
+            --card-bg: #ffffff;
+            --card-hover: #eff6ff;
+            --border-color: #e2e8f0;
+            --header-bg: #ffffff;
+            --tab-bg: #f1f5f9;
+            --icon-bg: #ffffff;
+            --shadow: rgba(0,0,0,0.05);
+        }
+
+        :root[data-theme="dark"] {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --card-bg: #1e293b;
+            --card-hover: #1e293b;
+            --border-color: #334155;
+            --header-bg: #1e293b;
+            --tab-bg: #334155;
+            --icon-bg: #334155;
+            --shadow: rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .header {
+            background: var(--header-bg);
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            flex-wrap: wrap;
+            gap: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-main);
+        }
+
+        .settings {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-setting {
+            background: var(--tab-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-setting:hover {
+            border-color: var(--accent-blue);
+        .btn-setting:hover {
+            border-color: var(--accent-blue);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            border-radius: 8px;
+            background: var(--tab-bg);
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: var(--text-main);
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            background: var(--accent-blue);
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+            flex-grow: 1;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .view {
+            display: none;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 20px var(--shadow);
+            flex-grow: 1;
+            transition: background-color 0.3s;
+        }
+
+        .view.active {
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Map View Layout */
+        .map-layout {
+            display: flex;
+            gap: 20px;
+            height: calc(100vh - 220px);
+            min-height: 500px;
+        }
+
+        .map-sidebar {
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .map-container {
+            flex-grow: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .location-card {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .location-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateX(4px);
+        }
+
+        .location-card.active {
+            background: var(--card-hover);
+            border-color: var(--accent-blue);
+        }
+
+        .loc-icon {
+            font-size: 24px;
+            background: var(--icon-bg);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .loc-info h3 {
+            margin: 0 0 4px 0;
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        .loc-info p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .google-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .google-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .map-layout {
+                flex-direction: column;
+                height: auto;
+            }
+            .map-sidebar {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            .location-card {
+                min-width: 260px;
+            }
+            .map-container {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-title">
+            <h1 data-i18n="headerTitle">Marmara Üniversitesi Göztepe Yerleşkesi</h1>
+        </div>
+        
+        <div class="settings">
+            <button class="btn-setting" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
+            <button class="btn-setting" onclick="toggleLang()" id="langBtn">🌐 EN</button>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('campus')" data-i18n="tabMap">Google Maps Yerleşke</button>
+            <button class="tab" onclick="showTab('floor')" data-i18n="tabFloor">3. Kat Planı</button>
+            <button class="tab" onclick="showTab('program')" data-i18n="tabProgram">Kongre Programı</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- CAMPUS MAP (Google Maps) -->
+        <div id="campus" class="view active">
+            <h2 data-i18n="mapTitle" style="margin-top: 0; margin-bottom: 20px; font-size: 20px;">Kongre Önemli Konumları</h2>
+            <div class="map-layout">
+                <!-- Sidebar Locations -->
+                <div class="map-sidebar">
+                    <div class="location-card active" onclick="updateMap('40.9872382,29.0540696', this)">
+                        <div class="loc-icon">🏫</div>
+                        <div class="loc-info">
+                            <h3 data-i18n="loc1Title">İnsan ve Toplum Bilimleri Fakültesi</h3>
+                            <p data-i18n="loc1Desc">Kongre Ana Binası</p>
+                            <a href="https://maps.app.goo.gl/DAs2DRhp1P3ZGBSg7" target="_blank" class="google-link" onclick="event.stopPropagation()" data-i18n="openMap">Google Maps'te Aç ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="location-card" onclick="updateMap('40.985036,29.052511', this)">
+                        <div class="loc-icon">🚪</div>
+                        <div class="loc-info">
+                            <h3 data-i18n="loc2Title">Ana Giriş Kapısı</h3>
+                            <p data-i18n="loc2Desc">Fahrettin Kerim Gökay Caddesi Üzeri</p>
+                            <a href="https://maps.app.goo.gl/1v3CghdpuzdtSVy99" target="_blank" class="google-link" onclick="event.stopPropagation()" data-i18n="openMap">Google Maps'te Aç ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="location-card" onclick="updateMap('40.986484,29.051616', this)">
+                        <div class="loc-icon">🎤</div>
+                        <div class="loc-info">
+                            <h3 data-i18n="loc3Title">İbrahim Üzümcü</h3>
+                            <p data-i18n="loc3Desc">Konferans Salonu</p>
+                            <a href="https://maps.app.goo.gl/C961vUeDsuSHNE8s9" target="_blank" class="google-link" onclick="event.stopPropagation()" data-i18n="openMap">Google Maps'te Aç ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="location-card" onclick="updateMap('40.987949,29.0532696', this)">
+                        <div class="loc-icon">🍽️</div>
+                        <div class="loc-info">
+                            <h3 data-i18n="loc4Title">Yemekhane</h3>
+                            <p data-i18n="loc4Desc">Öğle yemeği ve molalar için</p>
+                            <a href="https://maps.app.goo.gl/dhpVtK9iFuLQUcWm7" target="_blank" class="google-link" onclick="event.stopPropagation()" data-i18n="openMap">Google Maps'te Aç ↗</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps iFrame -->
+                <div class="map-container">
+                    <iframe 
+                        id="gmap-iframe"
+                        src="https://www.google.com/maps?q=40.9872382,29.0540696&z=17&output=embed" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- FLOOR PLAN -->
+        <div id="floor" class="view">
+            <h2 data-i18n="floorTitle" style="margin-top: 0; margin-bottom: 5px; font-size: 20px;">İnsan ve Toplum Bilimleri Fakültesi - 3. Kat Planı</h2>
+            <p data-i18n="floorDesc" style="color: var(--text-muted); margin-bottom: 20px;">Kongre bu katta gerçekleşecektir. 303 numaralı salon ana salondur.</p>
+            
+            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; overflow: auto;">
+                <img src="kat-plani.png" alt="Kat Planı" style="max-width: 100%; height: auto; border: 1px solid var(--border-color); border-radius: 8px;">
+                <p style="font-size: 14px; color: var(--text-muted); margin-top: 15px;">
+                    ℹ️ Not: Lütfen çizdiğiniz görseli <strong>kat-plani.png</strong> veya <strong>kat-plani.jpg</strong> (kodda güncelleyerek) adıyla bu klasöre kaydedin.
+                </p>
+            </div>
+        </div>
+
+        <!-- CONGRESS PROGRAM -->
+        <div id="program" class="view">
+            <h2 data-i18n="programTitle" style="margin-top: 0; margin-bottom: 20px; font-size: 20px;">Kongre Programı</h2>
+            <div style="flex-grow: 1; border: 1px solid var(--border-color); border-radius: 12px; overflow: auto; height: calc(100vh - 200px); min-height: 500px; padding: 15px; background: var(--card-bg);">
+                <style>
+                    .prog-table { width: 100%; border-collapse: collapse; font-size: 13px; color: var(--text-main); }
+                    .prog-table th, .prog-table td { border: 1px solid var(--border-color); padding: 12px; text-align: left; vertical-align: top; }
+                    .prog-table th { background-color: var(--accent-blue); color: white; position: sticky; top: 0; z-index: 2; }
+                    .prog-row:hover { background-color: var(--tab-bg); }
+                    .prog-time { font-weight: bold; white-space: nowrap; width: 80px; }
+                    .prog-speaker { font-weight: 600; color: var(--accent-blue); display: block; margin-bottom: 6px; }
+                    .prog-header { background: #fef08a !important; color: #1e293b !important; text-align: center !important; font-size: 16px; font-weight: bold; position: static; }
+                </style>
+                
+                <table class="prog-table">
+                    <tr><th colspan="7" class="prog-header">Gün 1 — 30 Eylül 2026, Çarşamba</th></tr>
+                    <tr>
+                        <td class="prog-time">09:00–09:30</td>
+                        <td colspan="6" style="text-align:center; font-weight:bold; font-size:15px;">Açılış Töreni & Kayıt (Ana Salon / Plener)</td>
+                    </tr>
+                    <tr>
+                        <td class="prog-time">09:30–10:15</td>
+                        <td colspan="6" style="text-align:center; font-weight:bold; font-size:15px; color:#ef4444;">Ana Oturum Konuşmacısı — KEYNOTE 1 — ŞEBNEM BAHADIR</td>
+                    </tr>
+                    <tr>
+                        <td class="prog-time">10:15–10:30</td>
+                        <td colspan="6" style="text-align:center; font-weight:bold;">Ara</td>
+                    </tr>
+                    <tr>
+                        <th>Saat</th>
+                        <th>Salon A<br><small>Çeviri Sosyolojisi</small></th>
+                        <th>Salon B<br><small>Toplum Çevirmenliği</small></th>
+                        <th>Salon C<br><small>Çeviri Eğitimi</small></th>
+                        <th>Salon D<br><small>Çeviri Kuramı</small></th>
+                        <th>Salon E<br><small>Engelsiz İletişim</small></th>
+                        <th>Salon F<br><small>Çeviri Tarihi</small></th>
+                    </tr>
+                    <tr class="prog-row">
+                        <td class="prog-time">10:30</td>
+                        <td><span class="prog-speaker">Zuhal Emirosmanoğlu & Javid Aliyev</span>"Sociologie Générale'in" Topoğrafyasında Bir Çevirmen Silueti: Çeviri Sürecine Fenomenolojik Bakış</td>
+                        <td><span class="prog-speaker">Ulf Norberg & Eva Taxén</span>Terminology work in a public service translation training programme</td>
+                        <td><span class="prog-speaker">Aslı Fişekçioğlu</span>Çevirmen Adaylarının Aracılık Yeterlilikleri: Hazırlık Sınıfı</td>
+                        <td><span class="prog-speaker">Anna Rędzioch-Korkuz</span>How valid is the term "translation" today?</td>
+                        <td><span class="prog-speaker">Deniz Çağlayan Gümüş</span>İletişimde Erişilebilirlik</td>
+                        <td><span class="prog-speaker">Sevcan Yılmaz Kutlay</span>Karahanlıların Kültürel Planlama Sürecinde Kur'an-ı Kerim Çevirileri</td>
+                    </tr>
+                    <tr class="prog-row">
+                        <td class="prog-time">10:50</td>
+                        <td><span class="prog-speaker">Büşra Çelik</span>YZ Çağında Çevirmenliğin Değişen Rolleri</td>
+                        <td><span class="prog-speaker">Mustafa Keshkeia</span>The Human Translator in Risk and Crisis Communication</td>
+                        <td><span class="prog-speaker">Begüm Çağla Bulut</span>Çeviri Eğitiminde İnsan Odaklı Teknoloji Edinci</td>
+                        <td><span class="prog-speaker">Seda Kuşçu Özbudak</span>Reverse Babel: User Perceptions of Automated Translation on X</td>
+                        <td><span class="prog-speaker">Fayıka Göktepe</span>Kolay Dil Metin Üretimine Çeviribilimsel Bir Yaklaşım</td>
+                        <td><span class="prog-speaker">Aişe Handan Konar</span>Osmanlı Tercüme Söyleminde Metaforik Temsil</td>
+                    </tr>
+                    <tr class="prog-row">
+                        <td class="prog-time">11:10</td>
+                        <td><span class="prog-speaker">Oktay Eser, N. Müge Uysal, Ali Duran</span>Mütercim-Tercümanlık Mezunlarının Sektörde Kalabilme Mücadelesi</td>
+                        <td><span class="prog-speaker">Carmen Pena & vd.</span>The Human Interpreter in Healthcare: Intercultural Mediation</td>
+                        <td><span class="prog-speaker">Bilge Metin Tekin</span>Teknik Metin Çevirisinde Öğrencilerin Karşılaştığı Güçlükler</td>
+                        <td><span class="prog-speaker">Aslı Tarakçıoğlu & Elif Özge Koç Yel</span>The Translator in Flux: Language, Incompleteness</td>
+                        <td><span class="prog-speaker">Sine Demirkıvıran & Meltem Kılıç</span>Kolay Dil Çevirilerinde Denetçi Gruplar</td>
+                        <td><span class="prog-speaker">Emine Bogenç Demirel</span>Türk Yazın Repertuvarında Popülerliğin Ötesinde: İnsan Harası</td>
+                    </tr>
+                    <tr><td colspan="7" style="height:20px; border:none;"></td></tr>
+                    <tr><th colspan="7" class="prog-header">Gün 2 — 1 Ekim 2026, Perşembe</th></tr>
+                    <tr>
+                        <td class="prog-time">09:30–10:15</td>
+                        <td colspan="6" style="text-align:center; font-weight:bold; font-size:15px; color:#ef4444;">Ana Oturum Konuşmacısı — KEYNOTE 3 — REBECCA TIPTON</td>
+                    </tr>
+                    <tr class="prog-row">
+                        <td class="prog-time">10:30</td>
+                        <td><span class="prog-speaker">Nurselin Çelik & M. Baydere</span>Edebiyat Çevirilerindeki Olgusal Hataların Tespitinde Büyük Dil Modelleri</td>
+                        <td><span class="prog-speaker">Füsun Bilir Ataseven & F. Bilge Atay</span>Çeviriyle Gelen “Ekofeminizm”in Türkçeye Kabulü</td>
+                        <td><span class="prog-speaker">Sevda Pekcoşkun Güner</span>The Potential of No-Code AI Platforms in Translator Training</td>
+                        <td><span class="prog-speaker">Mahinur Gözde Kasurka</span>Can the Nonhuman Speak? Interspecies Communication</td>
+                        <td><span class="prog-speaker">Hakan Dilman & Bekir Savaş</span>The Invisible Architects of Civilization: Rethinking Translators</td>
+                        <td><span class="prog-speaker">Mustafa Mahir & Oktay Eser</span>Toplum Çevirmenliği Üzerine Bibliyometrik Derleme Araştırması</td>
+                    </tr>
+                    <tr><td colspan="7" style="height:20px; border:none;"></td></tr>
+                    <tr><th colspan="7" class="prog-header">Gün 3 — 2 Ekim 2026, Cuma</th></tr>
+                    <tr>
+                        <td class="prog-time">09:30–10:15</td>
+                        <td colspan="6" style="text-align:center; font-weight:bold; font-size:15px; color:#ef4444;">Ana Oturum Konuşmacısı — KEYNOTE 5 — GISÉLE SAPIRO</td>
+                    </tr>
+                    <tr class="prog-row">
+                        <td class="prog-time">10:15</td>
+                        <td><span class="prog-speaker">Devrim Ulaş Arslan & vd.</span>Çeviri Tarihinde Unutulmuş bir Kuramsal Metin</td>
+                        <td><span class="prog-speaker">Aslı Çelik</span>Halk Masalı Çevirilerine Yönelik Çok Katmanlı Bir Çözümleme Modeli</td>
+                        <td><span class="prog-speaker">Yaşar Akgün</span>Ardıl Çeviri Performansının Değerlendirilmesinde İnsan ve YZ</td>
+                        <td><span class="prog-speaker">Nazım Işık</span>Beyond the Interface: Trauma-Sensitive Translation</td>
+                        <td><span class="prog-speaker">B. Kanıdinç Kılınçarslan</span>Emerging Literary Translator Studies</td>
+                        <td><span class="prog-speaker">Mehmet Ali Çelikel</span>Dracula'nın Türkçe Çevirisinde Tıbbi Söylem</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Logic
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Google Maps Logic
+        function updateMap(coords, element) {
+            document.querySelectorAll('.location-card').forEach(card => card.classList.remove('active'));
+            element.classList.add('active');
+            
+            const iframe = document.getElementById('gmap-iframe');
+            iframe.src = `https://www.google.com/maps?q=${coords}&z=17&output=embed`;
+        }
+
+        // Theme Logic
+        let isDark = false;
+        function toggleTheme() {
+            isDark = !isDark;
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            document.getElementById('themeBtn').innerHTML = isDark ? '☀️ Light' : '🌙 Dark';
+        }
+
+        // Localization Logic
+        let currentLang = 'tr';
+        const translations = {
+            'tr': {
+                'headerTitle': 'Marmara Üniversitesi Göztepe Yerleşkesi',
+                'tabMap': 'Google Maps Yerleşke',
+                'tabFloor': '3. Kat Planı',
+                'tabProgram': 'Kongre Programı',
+                'mapTitle': 'Kongre Önemli Konumları',
+                'loc1Title': 'İnsan ve Toplum Bilimleri Fakültesi',
+                'loc1Desc': 'Kongre Ana Binası',
+                'openMap': "Google Maps'te Aç ↗",
+                'loc2Title': 'Ana Giriş Kapısı',
+                'loc2Desc': 'Fahrettin Kerim Gökay Caddesi Üzeri',
+                'loc3Title': 'İbrahim Üzümcü',
+                'loc3Desc': 'Konferans Salonu',
+                'loc4Title': 'Yemekhane',
+                'loc4Desc': 'Öğle yemeği ve molalar için',
+                'floorTitle': 'İnsan ve Toplum Bilimleri Fakültesi - 3. Kat Planı',
+                'floorDesc': 'Kongre bu katta gerçekleşecektir. 303 numaralı salon ana salondur.',
+                'programTitle': 'Kongre Programı (PDF)'
+            },
+            'en': {
+                'headerTitle': 'Marmara University Göztepe Campus',
+                'tabMap': 'Google Maps Campus',
+                'tabFloor': '3rd Floor Plan',
+                'tabProgram': 'Congress Program',
+                'mapTitle': 'Important Congress Locations',
+                'loc1Title': 'Faculty of Humanities & Social Sciences',
+                'loc1Desc': 'Main Congress Building',
+                'openMap': 'Open in Google Maps ↗',
+                'loc2Title': 'Main Entrance Gate',
+                'loc2Desc': 'On Fahrettin Kerim Gökay Street',
+                'loc3Title': 'İbrahim Üzümcü',
+                'loc3Desc': 'Conference Hall',
+                'loc4Title': 'Dining Hall',
+                'loc4Desc': 'For lunch and breaks',
+                'floorTitle': 'Faculty of Humanities & Social Sciences - 3rd Floor',
+                'floorDesc': 'The congress will take place on this floor. Hall 303 is the main hall.',
+                'programTitle': 'Congress Program (PDF)'
+            }
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'tr' ? 'en' : 'tr';
+            document.getElementById('langBtn').innerHTML = currentLang === 'tr' ? '🌐 EN' : '🌐 TR';
+            
+            document.documentElement.lang = currentLang;
+            
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
