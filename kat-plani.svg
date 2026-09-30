@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1030 660" font-family="Inter, Arial, sans-serif">
+  <defs>
+    <style>
+      .wall { fill: none; stroke: #1e293b; stroke-width: 3; }
+      .wall-fill { fill: #f8fafc; stroke: #1e293b; stroke-width: 2.5; }
+      .room { fill: #eff6ff; stroke: #1e293b; stroke-width: 2; }
+      .room-label { font-size: 18px; font-weight: 700; fill: #1e293b; text-anchor: middle; dominant-baseline: central; }
+      .room-label-sm { font-size: 14px; font-weight: 600; fill: #475569; text-anchor: middle; dominant-baseline: central; }
+      .area-label { font-size: 13px; font-weight: 600; fill: #6366f1; text-anchor: middle; dominant-baseline: central; }
+      .stair { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.5; }
+      .stair-line { stroke: #94a3b8; stroke-width: 1; }
+      .highlight { fill: #dbeafe; stroke: #3b82f6; stroke-width: 2.5; }
+      .wc-icon { font-size: 16px; fill: #64748b; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1030" height="660" fill="#f1f5f9" rx="12"/>
+  
+  <!-- Main building outline -->
+  <rect x="20" y="20" width="990" height="620" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" rx="8"/>
+
+  <!-- Top corridor / upper area -->
+  <rect x="40" y="40" width="950" height="100" class="wall-fill"/>
+
+  <!-- Fuaye Alanı -->
+  <rect x="40" y="140" width="200" height="120" class="room" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+  <text x="140" y="195" class="room-label" fill="#92400e">fuaye</text>
+  <text x="140" y="215" class="room-label-sm" fill="#92400e">alanı</text>
+
+  <!-- A Blok rooms (313-319) -->
+  <rect x="40" y="260" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="287" class="room-label">313</text>
+
+  <rect x="40" y="315" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="342" class="room-label">314</text>
+
+  <rect x="40" y="370" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="397" class="room-label">315</text>
+
+  <rect x="40" y="425" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="452" class="room-label">316</text>
+
+  <rect x="40" y="480" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="507" class="room-label">317</text>
+
+  <rect x="40" y="535" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="562" class="room-label">318</text>
+
+  <rect x="40" y="590" width="80" height="55" class="room" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+  <text x="80" y="617" class="room-label">319</text>
+
+  <!-- A Blok label -->
+  <text x="135" y="280" class="area-label" fill="#16a34a" font-size="15px" font-weight="700">a blok</text>
+
+  <!-- Staircase A (left) -->
+  <rect x="240" y="160" width="80" height="80" class="stair" rx="4"/>
+  <line x1="250" y1="170" x2="310" y2="170" class="stair-line"/>
+  <line x1="250" y1="180" x2="310" y2="180" class="stair-line"/>
+  <line x1="250" y1="190" x2="310" y2="190" class="stair-line"/>
+  <line x1="250" y1="200" x2="310" y2="200" class="stair-line"/>
+  <line x1="250" y1="210" x2="310" y2="210" class="stair-line"/>
+  <line x1="250" y1="220" x2="310" y2="220" class="stair-line"/>
+  <text x="280" y="155" class="wc-icon">🚻</text>
+
+  <!-- Room 303 (main hall - highlighted) -->
+  <rect x="360" y="220" width="200" height="340" class="highlight" rx="4"/>
+  <text x="460" y="390" class="room-label" font-size="28px" fill="#1d4ed8">303</text>
+  <!-- Lines inside 303 to show seating -->
+  <line x1="380" y1="280" x2="540" y2="280" stroke="#93c5fd" stroke-width="1"/>
+  <line x1="380" y1="320" x2="540" y2="320" stroke="#93c5fd" stroke-width="1"/>
+  <line x1="380" y1="360" x2="540" y2="360" stroke="#93c5fd" stroke-width="1"/>
+  <line x1="380" y1="400" x2="540" y2="400" stroke="#93c5fd" stroke-width="1"/>
+  <line x1="380" y1="440" x2="540" y2="440" stroke="#93c5fd" stroke-width="1"/>
+  <line x1="380" y1="480" x2="540" y2="480" stroke="#93c5fd" stroke-width="1"/>
+
+  <!-- B Blok area -->
+  <rect x="600" y="180" width="240" height="380" class="room" fill="#fef9c3" stroke="#eab308" stroke-width="2" rx="4"/>
+  <text x="720" y="230" class="area-label" fill="#a16207" font-size="16px" font-weight="700">b blok</text>
+
+  <!-- Staircase B (right) -->
+  <rect x="680" y="160" width="80" height="80" class="stair" rx="4"/>
+  <line x1="690" y1="170" x2="750" y2="170" class="stair-line"/>
+  <line x1="690" y1="180" x2="750" y2="180" class="stair-line"/>
+  <line x1="690" y1="190" x2="750" y2="190" class="stair-line"/>
+  <line x1="690" y1="200" x2="750" y2="200" class="stair-line"/>
+  <line x1="690" y1="210" x2="750" y2="210" class="stair-line"/>
+  <text x="720" y="155" class="wc-icon">🚻</text>
+
+  <!-- Right side rooms -->
+  <rect x="860" y="180" width="120" height="380" class="room" rx="4"/>
+
+  <!-- Title bar -->
+  <rect x="0" y="0" width="1030" height="20" fill="#6366f1" rx="12 12 0 0"/>
+  <text x="515" y="14" font-size="11px" fill="white" text-anchor="middle" font-weight="600">İnsan ve Toplum Bilimleri Fakültesi — 3. Kat Planı</text>
+</svg>
